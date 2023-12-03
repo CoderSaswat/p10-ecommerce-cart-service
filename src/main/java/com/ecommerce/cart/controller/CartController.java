@@ -38,7 +38,6 @@ public class CartController {
         cartService.removeItemFromCart(userId, productId);
     }
 
-    // Additional API for getting all carts (for demonstration purposes)
     @GetMapping("/all")
     public List<CartDto> getAllCarts() {
         return cartService.getAllCarts();

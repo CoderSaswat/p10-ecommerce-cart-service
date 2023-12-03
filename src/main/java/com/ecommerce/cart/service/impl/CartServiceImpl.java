@@ -12,7 +12,6 @@ import com.ecommerce.cart.serviceclient.ProductServiceClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -64,7 +63,6 @@ public class CartServiceImpl implements CartService {
     public CartDto updateItemQuantity(UUID userId, CartItemDto cartItemDto) {
         Cart cart = getOrCreateCart(userId);
 
-        // Find the item in the cart
         CartItem existingItem = cart.getCartItems().stream()
                 .filter(item -> item.getProductId().equals(cartItemDto.getProductId()))
                 .findFirst()
@@ -84,7 +82,6 @@ public class CartServiceImpl implements CartService {
     @Override
     public void removeItemFromCart(UUID userId, UUID productId) {
         Cart cart = getOrCreateCart(userId);
-        // Remove the item from the cart
         cart.getCartItems().removeIf(item -> item.getProductId().equals(productId));
         cartRepository.save(cart);
     }
@@ -97,7 +94,6 @@ public class CartServiceImpl implements CartService {
                 .collect(Collectors.toList());
     }
 
-    // Helper method to get or create a cart for a user
     private Cart getOrCreateCart(UUID userId) {
         Optional<Cart> optionalCart = cartRepository.findByUserId(userId);
         if(optionalCart.isEmpty()){
